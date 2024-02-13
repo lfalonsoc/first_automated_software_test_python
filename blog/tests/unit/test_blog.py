@@ -7,8 +7,8 @@ class BlogTest(TestCase):
         
         self.assertEqual('Test', b.title)
         self.assertEqual('Test Author', b.author)
-        self.assertListEqual([], b.post)
-        self.assertEqual(0, len(b.post))
+        self.assertListEqual([], b.posts)
+        self.assertEqual(0, len(b.posts))
         
     def test_repr(self):
         b: Blog = Blog('Test', 'Test Author')
@@ -19,9 +19,9 @@ class BlogTest(TestCase):
     
     def test_repr_multiple_posts(self):
         b: Blog = Blog('Test', 'Test Author')
-        b.post = ['test']
+        b.posts = ['test']
         b2: Blog = Blog('My day', "Rolf")
-        b2.post = ['Test', "Another"]
+        b2.posts = ['Test', "Another"]
         
         self.assertEqual(b.__repr__(), 'Test by Test Author (1 post)')
         self.assertEqual(b2.__repr__(), 'My day by Rolf (2 posts)')
