@@ -1,4 +1,3 @@
-from typing import Any
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -8,6 +7,14 @@ from blog.post import Post
 
 
 class TestsApp(TestCase):
+    def test_menu_calls_create_blog(self) -> None:
+        with patch("builtins.input") as mocked_inp:
+            mocked_inp.side_effect("c", "Test Create Blog", "Test Author", "q")
+
+            app.menu()
+
+            self.assertIsNotNone(app.blogs["Test Create Blog"])
+
     def test_menu_prints_prompt(self) -> None:
         with patch("builtins.input") as mocked_input:
             app.menu()
@@ -45,7 +52,6 @@ class TestsApp(TestCase):
     def test_print_posts(self) -> None:
         blog: Blog = Blog("Test", "Test Author")
         app.blogs = {"Test": blog}
-
         with patch("builtins.print") as mocked_print_post:
             app.print_posts(blog)
 
@@ -63,3 +69,13 @@ Post content
             app.print_posts(post)
 
             mocket_print.assert_called_with(expect_print)
+
+    def test_ask_create_post(self) -> None:
+        blog: Blog = Blog("Test", "Test Author")
+        app.blogs = {"Test": blog}
+        with patch("builtins.input") as mocked_input:
+            mocked_input.side_effect = ("Test", "Test Title", "Test Content")
+            app.ask_create_post()
+
+            self.assertEqual(blog.posts[0].title, "Test Title")
+            self.assertEqual(blog.posts[0].content, "Test Content")

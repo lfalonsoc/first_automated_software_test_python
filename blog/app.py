@@ -18,11 +18,11 @@ def menu() -> None:
     """
     1. Show the user the available blogs
     2. Let the user make a choise
-    3. Do something wit that choise
+    3. Do something with that choise
     4. Eventually exit
     """
-    print_blogs()  # 1.
-    selection: str = input(MENU_PROMPT)  # 2.
+    print_blogs()
+    selection: str = input(MENU_PROMPT)
     while selection != "q":
         if selection == "c":
             ask_create_blog()
@@ -48,7 +48,7 @@ def ask_create_blog() -> None:
 
 
 def ask_read_blog() -> None:
-    title: str = input("Enter the blog title you want to red: ")
+    title: str = input("Enter the blog title you want to read: ")
 
     print_posts(blogs[title])
 
@@ -58,4 +58,11 @@ def print_posts(post: Any) -> None:
 
 
 def ask_create_post() -> None:
-    pass
+    blog_name: str = input(
+        "Enter the blog title you\
+want to write a post in: "
+    )
+    title: str = input("Enter your post title: ")
+    content: str = input("Enter your post content: ")
+
+    blogs[blog_name].create_post(title, content)
