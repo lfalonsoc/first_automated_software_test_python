@@ -15,12 +15,6 @@ blogs: dict[Any, Any] = dict()  # blog_name : Blog object
 
 
 def menu() -> None:
-    """
-    1. Show the user the available blogs
-    2. Let the user make a choise
-    3. Do something with that choise
-    4. Eventually exit
-    """
     print_blogs()
     selection: str = input(MENU_PROMPT)
     while selection != "q":
@@ -36,7 +30,7 @@ def menu() -> None:
 
 
 def print_blogs() -> None:
-    for key, blog in blogs.items():
+    for blog in blogs.values():
         print("- {}".format(blog))
 
 
@@ -53,16 +47,21 @@ def ask_read_blog() -> None:
     print_posts(blogs[title])
 
 
-def print_posts(post: Any) -> None:
+def print_posts(blog: Any) -> None:
+    for post in blog.posts:
+        print_post(post)
+
+
+def print_post(post: Any) -> None:
     print(POST_TEMPLATE.format(post.title, post.content))
 
 
 def ask_create_post() -> None:
-    blog_name: str = input(
+    blog: str = input(
         "Enter the blog title you\
 want to write a post in: "
     )
     title: str = input("Enter your post title: ")
     content: str = input("Enter your post content: ")
 
-    blogs[blog_name].create_post(title, content)
+    blogs[blog].create_post(title, content)
